@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 //ajouter un tweet
 //ajoute les hashtags en premier, vérifie leur existence ou non et renvoie les hashtags créés.
 router.post('/newTweet', (req, res) => {
-    if (!checkBody(req.body, ['content', 'token', 'hashtags'])) {
+    if (!checkBody(req.body, ['content', 'token'])) {
         res.json({ result: false, error: 'checkbody sent false' })
     } else {
         User.findOne({ token: req.body.token }).then(data => {

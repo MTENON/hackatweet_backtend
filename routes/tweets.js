@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
         .populate('creator')
         .then(data => {
             const sentData = data.map(e => {
-                return { content: e.content, date: moment.utc(e.tweetDate).fromNow(), firstname: e.creator.firstname, username: e.creator.username }
+                return { content: e.content, date: moment.utc(e.tweetDate).fromNow(), firstname: e.creator.firstname, username: e.creator.username, likes: e.isLikedBy.length }
             })
             res.json(sentData);
         })

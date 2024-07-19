@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { checkBody } = require("../modules/checkbody");
-const User = require("../models/user");
+const User = require("../models/User");
 const mongoose = require("mongoose");
 
 const bcrypt = require("bcrypt");
@@ -14,9 +14,12 @@ router.get("/test", (req, res) => {
 
 router.post("/signup", (req, res) => {
   if (!checkBody(req.body, ["firstname", "username", "password"])) {
+
     res.json({ result: false, error: "Missing or empty fields" });
     return;
+
   } else {
+
     User.findOne({ username: req.body.username }).then((data) => {
       if (data === null) {
         const newUser = new User({
@@ -25,12 +28,15 @@ router.post("/signup", (req, res) => {
           password: bcrypt.hashSync(req.body.password, 10),
           token: uid2(32),
         });
+
         newUser.save().then((data) => {
           res.json({ result: true, token: data.token });
         });
+
       } else {
         // User already exists in database
         res.json({ result: false, error: "User already exists" });
+
       }
     });
   }
@@ -60,7 +66,7 @@ router.post("/signin", (req, res) => {
 
         //ON VÉRIFIE SI LE MDP CORRESPOND AU MDP ENCRYPTE
         bcrypt.compareSync(req.body.password, data.password) //LE MDP CRYPTE EST IL CORRESPONDANT AU BODY PASSWORD?
-          ? res.json({ result: true, token: data.token }) //SI VRAI ON RENVOIE TRUE ET LE TOKEN
+          ? res.json({ result: true, token: data.token, firstname: data.firstname }) //SI VRAI ON RENVOIE TRUE ET LE TOKEN
           : res.json({ result: false, error: "Wrong password" }); //SI FAUX ON RENVOIE UNE ERROR
 
         //2 FIN -----------------------------------------

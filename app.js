@@ -7,8 +7,6 @@ var logger = require('morgan');
 
 
 require('./models/connection');
-const user = require('./models/user');
-
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

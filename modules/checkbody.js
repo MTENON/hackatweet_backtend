@@ -1,6 +1,6 @@
 function checkBody(obj, array) {
 
-let pattern = /^\s*$/;
+    let pattern = /^\s*$/;
 
     for (let i = 0; i < array.length; i++) {
         console.log(obj[array[i]], !pattern.test(obj[array[i]]));
@@ -9,7 +9,7 @@ let pattern = /^\s*$/;
             return false
         }
     }
-return true
+    return true
 }
 
 module.exports = { checkBody };
